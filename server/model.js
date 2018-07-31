@@ -1,4 +1,4 @@
-const mongoose = 'require' ("mongoose");
+const mongoose = require("mongoose");
 //连接mongoose
 const DB_URL = "mongodb://127.0.0.1:27017/chat";
 mongoose.connect(DB_URL);
@@ -14,8 +14,7 @@ const models = {
       'type': String,
       'require': true
     },
-    ''
-    type '': {
+    'type': {
       'type': String,
       'require': true
     },
@@ -71,7 +70,7 @@ for (let m in models) {
 }
 
 module.exports = {
-  getModel: function(name) {
+  getModel: function (name) {
     return mongoose.model(name)
   }
 }
