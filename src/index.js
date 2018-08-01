@@ -29,6 +29,7 @@ import './index.css'
 const store = createStore(
   reducers,
   compose(
+    // 开启redux-thunk
     applyMiddleware(thunk),
     window.devToolsExtension ? window.devToolsExtension() : f => f
   )
@@ -40,6 +41,7 @@ ReactDOM.render(
   <Provider store={store}>
     <BrowserRouter>
       <div>
+        {/* 对所有页面都进行权限认证 */}
         <AuthRouter />
         <Switch>
           <Route path="/condidateinfo" component={CondidateInfo} />

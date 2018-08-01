@@ -9,8 +9,8 @@ const app = express();
 //socket.io和express绑定起来
 const server = require('http').Server(app)
 const io = require("socket.io")(server);
-// io shi quanju lianjie de qingqiu
-//socket shi zhegelianjiede qingqiu
+// io 是权限连接的请求
+//socket 是这个连接的请求
 io.on('connection', function(socket) {
   socket.on('sendmsg', function(data) {
     console.log(data)
@@ -39,7 +39,7 @@ const userRouter = require("./user");
 
 app.use(cookieParser());
 app.use(bodyParser.json());
-app.use("/user", userRouter);
+app.use("/user", userRouter);//访问后端/user,使用userRouter
 
 server.listen(9093, function() {
   console.log("ok 9093");

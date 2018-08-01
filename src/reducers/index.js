@@ -10,6 +10,7 @@ import {
 import {
   chat
 } from './chat'
+//合并所有reducer
 export default combineReducers({
   user,
   chatuser,

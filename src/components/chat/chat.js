@@ -14,13 +14,13 @@ import {
 } from '../../reducers/chat'
 const socket = io('ws://localhost:9093')
 
-// @connect(
-//   state => state, {
-//     getMsgList,
-//     sendMsg,
-//     recvMsg
-//   }
-// )
+@connect(
+  state => state, {
+    getMsgList,
+    sendMsg,
+    recvMsg
+  }
+)
 
 
 class Chat extends React.Component {
@@ -57,8 +57,8 @@ class Chat extends React.Component {
       })
       console.log(data)
     })
-    // this.props.getMsgList()
-    // this.props.recvMsg()
+     this.props.getMsgList()
+     this.props.recvMsg()
     // socket.on('recvmsg', (data) => {
     //   this.setState({
     //     msg: [...this.state.msg, data.text]

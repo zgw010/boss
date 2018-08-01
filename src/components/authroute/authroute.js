@@ -9,6 +9,7 @@ import {
 import {
   connect
 } from 'react-redux'
+//用withRouter包裹下这个组件,为了使用this.props.history等属性
 @withRouter
 @connect(
   null, {
@@ -17,9 +18,9 @@ import {
 )
 class AuthRoute extends React.Component {
   componentDidMount() {
-    const publicList = ['/login', '/register']
+    const publicList = ['/login', '/register'] //定义无需跳转的页面
     const pathname = this.props.location.pathname
-    //console.log(pathname);
+    //如果是无需跳转的页面,不作任何操作
     if (publicList.indexOf(pathname) > -1) {
       return null;
     }
