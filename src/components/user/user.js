@@ -33,7 +33,8 @@ class User extends React.Component {
       onPress: () => {
         browserCookie.erase('userid');
         this.props.logoutSubmit()
-        window.location.href = window.location.href //刷新当前页
+        // window.location.href = window.location.href //刷新当前页
+        //不刷新页面,清空state 返回login 路由
       }
     }, ])
 

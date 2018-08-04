@@ -32,10 +32,15 @@ function Msg() {
   recvMsg
 })
 class Dashboard extends React.Component {
-  componentDidMount() {
-    this.props.getMsgList()
-    this.props.recvMsg()
-  }
+  // componentDidMount() {
+  //   if(!this.props.chat.chatmsg.length){
+  //     //进入页面后接收消息列表
+  //     this.props.getMsgList()
+  //     //进入聊天页面后开始接收消息
+  //     this.props.recvMsg()
+  //   }
+
+  // }
   render() {
     const {
       pathname
@@ -77,7 +82,7 @@ class Dashboard extends React.Component {
       <div>
         <NavBar className="fixd-header" mode='dard'>{page.title}</NavBar>
         
-        <div style={{marginTop:45}}>
+        <div style={{marginTop:45,bottom:100}}>
           <Switch>
             {navList.map(v=>(
               <Route key={v.path} path={v.path} component={v.component}/>

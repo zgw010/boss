@@ -43,6 +43,7 @@ ReactDOM.render(
       <div>
         {/* 对所有页面都进行权限认证 */}
         <AuthRouter />
+        {/* 只要用switch包起来的 只会命中第一个,可以用来实现404 */}
         <Switch>
           <Route path="/condidateinfo" component={CondidateInfo} />
           <Route path="/bossinfo" component={BossInfo} />

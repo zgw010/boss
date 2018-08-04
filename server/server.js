@@ -11,24 +11,27 @@ const server = require('http').Server(app)
 const io = require("socket.io")(server);
 // io 是权限连接的请求
 //socket 是这个连接的请求
+
+
 io.on('connection', function(socket) {
   socket.on('sendmsg', function(data) {
-    console.log(data)
+    // console.log(data)
     const {
       from,
       to,
       msg
     } = data;
     const chatid = [from, to].sort().join('_')
-    // Chat.create({
-    //   chatid,
-    //   from,
-    //   to,
-    //   content: msg
-    // }, function(err, doc) {
-    //   io.emit('recvmsg', Object.assign({}, doc._doc))
-    // })
-    io.emit('recvmsg', data)
+    console.log(chatid)
+    Chat.create({
+      chatid,
+      from,
+      to,
+      content: msg
+    }, function(err, doc) {
+      io.emit('recvmsg', Object.assign({}, doc._doc))
+    })
+    // io.emit('recvmsg', data)
 
   })
   console.log('login')

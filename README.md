@@ -25,8 +25,14 @@ POST的语义是根据请求负荷（报文主体）对指定的资源做出处�
 
 ## socket.io
 
-Socket.IO 是一个基于 Node.js 的实时应用程序框架，在即时通讯、通知与消息推送，实时分析等场景中有较为广泛的应用。
+Socket.IO 是一个基于 Node.js 的实时应用程序框架，在即时通讯、通知与消息推送，实时分析等场景中有较为广泛的应用。socket.io基于websocket协议,前后端通过事件进行双向通信.
+
+io.on 监听事件
+
+io.emit 触发事件
+
 socket.io 由两部分组成:
+
 - A server that integrates with (or mounts on) the Node.JS HTTP Server: socket.io
 - A client library that loads on the browser side: socket.io-client
 
@@ -42,3 +48,71 @@ socket.io 由两部分组成:
 component/authrouter  根据权限跳转页面
 
 redux/login 注册和登陆的reducer
+
+containers/bossinfo boss完善信息页面
+
+component/user 用户个人信息
+
+## 中间件
+
+
+
+> **It provides a third-party extension point between dispatching an action, and the moment it reaches the reducer.**
+>
+> 这句话来自https://github.com/reduxjs/redux/blob/master/docs/advanced/Middleware.md
+
+在Redux中,中间件就是一个函数，对`store.dispatch`方法进行了改造，在发出 Action 和执行 Reducer 这两步之间，添加了其他功能。
+
+Redux thunk 中间件 允许你去写 action creators 返回函数而不是一个 action.
+
+```js
+//redux-thunk的源码
+function createThunkMiddleware(extraArgument) {
+  return ({ dispatch, getState }) => next => action => {
+    if (typeof action === 'function') {
+      return action(dispatch, getState, extraArgument);
+    }
+
+    return next(action);
+  };
+}
+
+const thunk = createThunkMiddleware();
+thunk.withExtraArgument = createThunkMiddleware;
+
+export default thunk;
+```
+
+```js
+function createStore(reducer, preloadedState, enhancer) {
+  ...
+	return enhancer(createStore)(reducer, preloadedState);
+  ...
+}
+  
+export default function applyMiddleware(...middlewares) {
+  return createStore => (...args) => {
+    const store = createStore(...args)
+    let dispatch = () => {
+      throw new Error(
+        `Dispatching while constructing your middleware is not allowed. ` +
+          `Other middleware would not be applied to this dispatch.`
+      )
+    }
+
+    const middlewareAPI = {
+      getState: store.getState,
+      dispatch: (...args) => dispatch(...args)
+    }
+    const chain = middlewares.map(middleware => middleware(middlewareAPI))
+    dispatch = compose(...chain)(store.dispatch)
+
+    return {
+      ...store,
+      dispatch
+    }
+  }
+}
+```
+
+关于Redux-thunk的一篇文章http://taobaofed.org/blog/2016/08/18/react-redux-connect/

@@ -65,6 +65,7 @@ Router.post("/register", function(req, res) {
         msg: "用户名重复！"
       });
     }
+    // 不用create是因为create无法获取_id
     const userModel = new User({
       user,
       type,
@@ -144,21 +145,31 @@ Router.post("/update", function(req, res) {
 })
 
 Router.get("/getmsglist", function(req, res) {
-  const user = req.cookies.user
-  Chat.find({
-    '$or': [{
-      from: user
-    }, {
-      to: user
-    }]
-  }, function(err, doc) {
-    if (!err) {
-      res.json({
-        code: 0,
-        msgs: doc
-      })
-    }
+  const user = req.cookies.userid;
+  User.find({},function(err,doc){
+    let users={}
+    doc.forEach(v=>{
+      users[v._id] = {name:v.user,avatar:v.avatar}
+    })
+    Chat.find({
+      '$or': [{
+        from: user
+      }, {
+        to: user
+      }]
+    }, function(err, doc) {
+      if (!err) {
+        console.log("msg_list ok1",doc)
+        console.log("msg_list ok2")
+        res.json({
+          code: 0,
+          msgs: doc,
+          users:users
+        })
+      }
+    })
   })
+
 })
 
 function md5Pwd(pwd) {

@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 //连接mongoose
 const DB_URL = "mongodb://127.0.0.1:27017/chat";
-mongoose.connect(DB_URL);
+mongoose.connect(DB_URL, { useNewUrlParser: true });
 
 
 const models = {
@@ -61,7 +61,8 @@ const models = {
     },
     'create_time': {
       'type': Number,
-      'default': Date.now
+      // 'default': Date.now
+      'default': new Date().getTime()
     }
   }
 }

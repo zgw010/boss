@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types';
 import {
   TabBar,
-
 } from 'antd-mobile'
 import {
   withRouter
@@ -10,8 +9,9 @@ import {
 import {
   connect
 } from 'react-redux'
-@connect(state => state.chat)
 @withRouter
+@connect(state => state.chat)
+
 class NavLinkBar extends React.Component {
 
   render() {

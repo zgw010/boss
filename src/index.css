@@ -13,9 +13,20 @@ body {
   position: fixed;
   bottom: 0;
   width: 100%;
-  z-index: -1;/* 把am-tab-baron放在底层，要不它在Item前面会使onClick不起作用 */
+  /* 把am-tab-baron放在底层，要不它在Item前面会使onClick不起作用 */
+  z-index: -1;
 }
-.fixd-header.am-navbar{
+.fixd-header{
+  position: fixed;
+  top: 0;
+  width: 100%;
+}
+.am-tab-bar-bar {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+}
+.am-navbar{
   position: fixed;
   top: 0;
   width: 100%;
@@ -38,7 +49,7 @@ img {
   width: 50px;
   height: 50px;
 }
-/* liao tian shu ru chuang kou */
+/*聊天输入窗口 */
 
 #chat-page .chat-me .am-list-extra{
   flex-basis:auto;
@@ -55,8 +66,25 @@ img {
 }
 
 .stick-footer{
-  z-index:10;
-  position: absolute;
+  z-index:10000;
+  position: fixed;
   bottom: 0;
   width:100%;
+}
+.chat-NavBar {
+  z-index:10000;
+  position: fixed;
+  top: 0;
+  width:100%;
+}
+/* 把用户列表放到顶层,否则会无法进入聊天界面 */
+/* .am-card {
+  z-index: 10000;
+} */
+.am-list-body {
+  z-index: 100;
+}
+/* 聊天页面回退按钮 */
+.am-icon-md {
+  width: 33px;
 }
