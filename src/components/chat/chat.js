@@ -3,7 +3,8 @@ import {
   List,
   InputItem,
   NavBar,
-  Icon
+  Icon,
+  Grid
 } from 'antd-mobile'
 import io from 'socket.io-client'
 import {
@@ -51,9 +52,16 @@ class Chat extends React.Component {
     //   text: this.state.text
     // })
     this.setState({
-      text: ''
-    })
+			text:'',
+			showEmoji:false
+		})
   }
+  //修复emoji bug
+  fixCarousel(){
+		setTimeout(function(){
+			window.dispatchEvent(new Event('resize'))
+		},0)
+	}
   componentDidMount() {
     //如果消息列表为空
     //这里有这判断是因为 获取消息放到了 dashboard 页面 ,可以把 getMsgList 拆分一下 未读消息数量显示和接收消息分开,然后把未读消息数量显示放在dashboard,把接受消息放在这里 就不用判断了
@@ -70,6 +78,11 @@ class Chat extends React.Component {
   
   render() {
     // console.log(this.props.chat.chatmsg)
+    const emoji = '😀 😃 😄 😁 😆 😅 😂 😊 😇 🙂 🙃 😉 😌 😍 😘 😗 😙 😚 😋 😜 😝 😛 🤑 🤗 🤓 😎 😏 😒 😞 😔 😟 😕 🙁 😣 😖 😫 😩 😤 😠 😡 😶 😐 😑 😯 😦 😧 😮 😲 😵 😳 😱 😨 😰 😢 😥 😭 😓 😪 😴 🙄 🤔 😬 🤐 😷 🤒 🤕 😈 👿 👹 👺 💩 👻 💀 ☠️ 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾 👐 🙌 👏 🙏 👍 👎 👊 ✊ 🤘 👌 👈 👉 👆 👇 ✋  🖐 🖖 👋  💪 🖕 ✍️  💅 🖖 💄 💋 👄 👅 👂 👃 👁 👀 '
+										.split(' ')
+										.filter(v=>v)
+										.map(v=>({text:v}))
+
     const userid = this.props.match.params.user;
     const Item = List.Item;
     const users = this.props.chat.users;
@@ -114,9 +127,34 @@ class Chat extends React.Component {
               onChange={v=>{
                 this.setState({text:v})
               }}
-              extra={<span onClick={()=>this.handleSubmit()}>发送</span>}
+              extra={
+                <div>
+                <span
+                style={{marginRight:15}}
+                onClick={()=>{
+                  this.setState({
+                    showEmoji:!this.state.showEmoji
+                  })
+                  this.fixCarousel()
+                }}
+              >😃</span>
+              <span onClick={()=>this.handleSubmit()}>发送</span>
+              </div>
+                }
             ></InputItem>
           </List>
+          {this.state.showEmoji?<Grid 
+						data={emoji}
+						columnNum={9}
+						carouselMaxRow={4}
+						isCarousel={true}
+						onClick={el=>{
+							this.setState({
+								text:this.state.text+el.text
+							})
+							
+						}}
+					/>:null}
         </div>
       </div>
     )
