@@ -5,7 +5,7 @@ const Router = express.Router();
 const model = require("./model");
 const User = model.getModel("user");
 const Chat = model.getModel("chat");
-
+// Chat.remove({},function(e,d){})
 
 const _filter = {
   'pwd': 0,

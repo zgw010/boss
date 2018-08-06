@@ -62,7 +62,7 @@ const models = {
     'create_time': {
       'type': Number,
       // 'default': Date.now
-      'default': new Date().getTime()
+      'default': Date.now
     }
   }
 }

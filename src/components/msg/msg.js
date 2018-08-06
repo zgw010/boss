@@ -3,7 +3,8 @@ import {
   connect
 } from 'react-redux'
 import {
-  List
+  List,
+  Badge
 } from 'antd-mobile'
 @connect(state=>state)
 class Msg extends React.Component {
@@ -21,7 +22,8 @@ class Msg extends React.Component {
       msgGroup[v.chatid]=msgGroup[v.chatid]||[];
       msgGroup[v.chatid].push(v)
     })
-    const chatList=Object.values(msgGroup)
+    const chatList=Object.values(msgGroup).sort((a,b)=>{console.log(b[b.length-1].create_time,a[a.length-1].create_time); return b[b.length-1].create_time-a[a.length-1].create_time})
+    console.log(chatList)
     return (
       <div>
         
@@ -29,12 +31,11 @@ class Msg extends React.Component {
             chatList.map(v=>{
               const vLast=v[v.length-1];
               const targetId = vLast.from===userid?vLast.to:vLast.from;
-              console.log(targetId)
-              console.log(this.props.chat.users)
+              const unreadNum = v.filter(v=>!v.read&&v.to===userid).length
               return (
                 <List key={vLast._id}>
                 <Item 
-                
+                extra={<Badge text={unreadNum}></Badge>}
                 thumb={require(`../img/${this.props.chat.users[targetId].avatar}.png`)}
                 >
                 {vLast.content}
