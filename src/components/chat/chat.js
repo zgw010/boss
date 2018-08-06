@@ -13,7 +13,8 @@ import {
 import {
   getMsgList,
   sendMsg,
-  recvMsg
+  recvMsg,
+  readMsg
 } from '../../reducers/chat'
 import { getChatId } from '../../util.js';
 const socket = io('ws://localhost:9093')
@@ -24,7 +25,8 @@ const socket = io('ws://localhost:9093')
   state => state, {
     getMsgList,
     sendMsg,
-    recvMsg
+    recvMsg,
+    readMsg
   }
 )
 
@@ -65,18 +67,22 @@ class Chat extends React.Component {
   componentDidMount() {
     //如果消息列表为空
     //这里有这判断是因为 获取消息放到了 dashboard 页面 ,可以把 getMsgList 拆分一下 未读消息数量显示和接收消息分开,然后把未读消息数量显示放在dashboard,把接受消息放在这里 就不用判断了
-console.log("componentDidMount")
-console.log(this.props.chat.chatmsg.length)
+    //目前已知一个bug,当数据库中没有chat时 进入dashboard和chat组件会重复recvMsg
     if(!this.props.chat.chatmsg.length){
       //进入页面后接收消息列表
       this.props.getMsgList()
       //进入聊天页面后开始接收消息
       this.props.recvMsg()
     }
-    
+
 
   }
-  
+  componentWillUnmount(){
+    // to 是当前聊天用户id
+    const to=this.props.match.params.user;
+    this.props.readMsg(to)
+    // 之所以放到componentWillUnmount() 中,而不是 componentDidMount()中 是因为,如果放在componentDidMount()中 ,那么用户在聊天界面时,收到消息不能更新未读消息数
+  }
   render() {
     // console.log(this.props.chat.chatmsg)
     const emoji = '😀 😃 😄 😁 😆 😅 😂 😊 😇 🙂 🙃 😉 😌 😍 😘 😗 😙 😚 😋 😜 😝 😛 🤑 🤗 🤓 😎 😏 😒 😞 😔 😟 😕 🙁 😣 😖 😫 😩 😤 😠 😡 😶 😐 😑 😯 😦 😧 😮 😲 😵 😳 😱 😨 😰 😢 😥 😭 😓 😪 😴 🙄 🤔 😬 🤐 😷 🤒 🤕 😈 👿 👹 👺 💩 👻 💀 ☠️ 👽 👾 🤖 🎃 😺 😸 😹 😻 😼 😽 🙀 😿 😾 👐 🙌 👏 🙏 👍 👎 👊 ✊ 🤘 👌 👈 👉 👆 👇 ✋  🖐 🖖 👋  💪 🖕 ✍️  💅 🖖 💄 💋 👄 👅 👂 👃 👁 👀 '
