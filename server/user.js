@@ -172,6 +172,19 @@ Router.get("/getmsglist", function(req, res) {
 
 })
 
+// 修正未读消息数
+Router.post("/readmsg",function(req,res){
+  const userid = req.cookies.userid;
+  const {from} = req.body;
+  Chat.update({from,to:userid},{'$set':{read:true}},{'multi':true},function(err,doc){
+    if(!err){
+      console.log(doc)
+      return res.json({code:0,num:doc.nModified})
+    }
+    return res.json({code:1,msg:'修改失败'})
+  })
+})
+
 function md5Pwd(pwd) {
   const salt = 'this_is_zgwz_md5'
   return utils.md5(utils.md5(pwd + salt));
