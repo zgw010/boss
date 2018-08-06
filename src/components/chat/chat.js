@@ -34,7 +34,7 @@ class Chat extends React.Component {
     super(props)
     this.state = {
       text: '',
-      msg: []
+			showEmoji:false
     }
   }
   handleSubmit() {
@@ -65,7 +65,7 @@ class Chat extends React.Component {
   componentDidMount() {
     //如果消息列表为空
     //这里有这判断是因为 获取消息放到了 dashboard 页面 ,可以把 getMsgList 拆分一下 未读消息数量显示和接收消息分开,然后把未读消息数量显示放在dashboard,把接受消息放在这里 就不用判断了
-
+console.log("componentDidMount")
     if(!this.props.chat.chatmsg.length){
       //进入页面后接收消息列表
       this.props.getMsgList()

@@ -13,6 +13,7 @@ import {
 import Boss from '../boss/boss'
 import Condidate from '../condidate/condidate'
 import User from '../user/user'
+import Msg from '../msg/msg'
 import {
   Redirect
 } from 'react-router-dom'
@@ -21,9 +22,7 @@ import {
   recvMsg
 } from '../../reducers/chat'
 
-function Msg() {
-  return <p>msg</p>
-}
+
 
 
 
@@ -37,7 +36,7 @@ class Dashboard extends React.Component {
       //进入页面后接收消息列表
       this.props.getMsgList()
       //进入聊天页面后开始接收消息
-      // this.props.recvMsg()
+      this.props.recvMsg()
     }
 
   }
