@@ -116,3 +116,34 @@ export default function applyMiddleware(...middlewares) {
 ```
 
 关于Redux-thunk的一篇文章http://taobaofed.org/blog/2016/08/18/react-redux-connect/
+
+## 性能优化
+
+- shouldComponentUpdate()
+
+  ```
+  shouldComponentUpdate(nextProps,nextState){
+    if(nextProps.xxx===this.props.xxx){
+      return false;
+    }
+  }
+  // 如果组件没有内部状态,只考内部传入的值进行渲染
+  class Demo extends React.pureComponent{
+    render(){
+      console.log()
+      return
+    }
+  }
+  ```
+
+  
+
+- React同构:首屏服务端渲染
+
+- React组件优化
+
+  - 属性传递优化
+  - 多组件优化
+  - key
+  - 绑定this的三种做法,除了在constructor中绑定,bind会在每次渲染时元素时重复执行bind,箭头函数则每次都会生成全新的函数
+  - 只传递所需要的数据
