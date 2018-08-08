@@ -134,6 +134,8 @@ export default function applyMiddleware(...middlewares) {
       return
     }
   }
+  
+  // React 建议,为了保证性能只做浅层比较,这也是为什么 state 不建议深层嵌套的原因
   ```
 
   
@@ -147,3 +149,11 @@ export default function applyMiddleware(...middlewares) {
   - key
   - 绑定this的三种做法,除了在constructor中绑定,bind会在每次渲染时元素时重复执行bind,箭头函数则每次都会生成全新的函数
   - 只传递所需要的数据
+
+- immutablejs 存在的意义和使用
+
+  - > Shared mutable state is the root of all evil（共享的可变状态是万恶之源）
+    >
+    > -- Pete Hunt
+
+  - https://github.com/camsong/blog/issues/3
