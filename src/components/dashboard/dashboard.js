@@ -7,7 +7,6 @@ import {
 } from 'antd-mobile'
 import NavLinkBar from '../navlink/navlink'
 import {
-  Switch,
   Route
 } from 'react-router-dom'
 import Boss from '../boss/boss'
@@ -21,7 +20,7 @@ import {
   getMsgList,
   recvMsg
 } from '../../reducers/chat'
-
+import QueueAnim from 'rc-queue-anim';
 
 
 
@@ -80,13 +79,15 @@ class Dashboard extends React.Component {
     return page ? (
       <div>
         <NavBar className="fixd-header" mode='dard'>{page.title}</NavBar>
-        
+
         <div style={{marginTop:45,bottom:100}}>
-          <Switch>
-            {navList.map(v=>(
-              <Route key={v.path} path={v.path} component={v.component}/>
-              ))}
-          </Switch>
+
+        <QueueAnim type='scaleX'>
+
+
+          <Route key={page.path} path={page.path} component={page.component}/>
+
+        </QueueAnim>
         </div>
         <NavLinkBar data={navList}></NavLinkBar>
       </div>

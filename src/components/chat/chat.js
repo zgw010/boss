@@ -6,7 +6,7 @@ import {
   Icon,
   Grid
 } from 'antd-mobile'
-import io from 'socket.io-client'
+import QueueAnim from 'rc-queue-anim';
 import {
   connect
 } from 'react-redux'
@@ -17,7 +17,6 @@ import {
   readMsg
 } from '../../reducers/chat'
 import { getChatId } from '../../util.js';
-const socket = io('ws://localhost:9093')
 // socket.on('recvmsg', function(data) {
 //   console.log(data);
 // })
@@ -110,6 +109,7 @@ class Chat extends React.Component {
         onLeftClick={() => this.props.history.goBack()}
         >{users[userid].name}</NavBar>
         <div style={{marginTop:45,marginBottom:45}}>
+        <QueueAnim delay={100} type='bottom'>
           {chatmsgs.map(v=>{
             // console.log(users)
             const avatar = require(`../img/${users[v.from].avatar}.png`)
@@ -120,11 +120,12 @@ class Chat extends React.Component {
               </List>
             ):(
               <List key={v._id}>
-                 <Item extra={<img src={avatar}/>} className="chat-me">{v.content}</Item>
+                 <Item extra={<img alt="emoji" src={avatar}/>} className="chat-me">{v.content}</Item>
               </List>
             )
            
           })}
+          </QueueAnim>
         </div>
         <div className="stick-footer">
           <List>

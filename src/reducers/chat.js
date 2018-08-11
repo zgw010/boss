@@ -32,7 +32,7 @@ export function chat(state = initstate, action) {
       }
       case MSG_READ:
       console.log(state.chatmsg)
-      const {from,num} = action.payload;
+      const {from} = action.payload;
         return {...state,
           unread:state.unread-action.payload.num,
           // chatmsg:state.chatmsg.map(v=>{
@@ -104,14 +104,15 @@ function msgRead({from,to,num}){
   }
 }
 // 把他人发给用户的信息标为已读
+// async+await
 export function readMsg(from){
-  return (dispatch,getState)=>{
-    axios.post('/user/readmsg',{from}).then(res=>{
-      const userid = getState().user._id;
-      console.log(userid,from)
-      if(res.status===200&&res.data.code===0){
-        dispatch(msgRead({userid,from,num:res.data.num}))
-      }
-    })
+  return async (dispatch,getState)=>{
+    const res = await axios.post('/user/readmsg',{from});
+    // const res2 = await axios.post('/user/xxx',{from});
+
+    const userid = getState().user._id;
+    if(res.status===200&&res.data.code===0){
+      dispatch(msgRead({userid,from,num:res.data.num}))
+    }
   }
 }

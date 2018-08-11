@@ -2,9 +2,7 @@ import axios from "axios";
 import {
   getRedirectPath
 } from '../util'
-import {
-  stat
-} from "fs";
+
 // const REGISTER_SUCCESS = "REGISTER_SUCCESS";
 // const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 const ERROR_MSG = "ERROR_MSG";
@@ -55,7 +53,7 @@ function authSuccess(obj) {
   } = obj //过滤掉data中的pwd字段
   return {
     type: AUTH_SUCCESS,
-    payload: obj
+    payload: data
   }
 }
 
