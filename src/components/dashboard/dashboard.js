@@ -82,12 +82,12 @@ class Dashboard extends React.Component {
 
         <div style={{marginTop:45,bottom:100}}>
 
-        <QueueAnim type='scaleX'>
+        {/* <QueueAnim type='scaleX'> */}
 
 
           <Route key={page.path} path={page.path} component={page.component}/>
 
-        </QueueAnim>
+        {/* </QueueAnim> */}
         </div>
         <NavLinkBar data={navList}></NavLinkBar>
       </div>

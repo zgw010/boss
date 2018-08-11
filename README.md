@@ -192,3 +192,8 @@ React中提出了 **虚拟DOM** 的概念，虚拟DOM以对象树的形式保存
 - node 使用 babel-node 配置node 里的react环境
 - 修改客户端代码,抽离app 组件,前后端共享
 - 服务端生成DOM结构,渲染,加载build后的css和js
+
+## npm run build
+
+- express中间件,拦截理由,手动渲染index.html
+- build设置为静态资源地址
